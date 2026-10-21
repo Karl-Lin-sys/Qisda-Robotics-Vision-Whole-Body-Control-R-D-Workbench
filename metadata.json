@@ -1,0 +1,6 @@
+{
+  "name": "Qisda Robotics Vision & Whole-Body Control R&D Workbench",
+  "description": "Peer-reviewed CVPR/ICCV/NeurIPS technology selection, official PyTorch/OpenCV/TensorFlow leak-free reference code with Big-O profiler, root-cause diagnostics, Canadian English toddler guide, Taiwan law compliant GitHub uploader, and Gemini 3.8 Live voice coach.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
