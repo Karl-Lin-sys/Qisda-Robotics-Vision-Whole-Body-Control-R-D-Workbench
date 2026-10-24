@@ -1,3 +1,4 @@
+import { localApiOnly, isLocalRequest } from './local-api-guard.mjs';
 import express from 'express';
 import { createServer } from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
@@ -33,12 +34,13 @@ Keep spoken responses concise, warm, clear, and engaging.`;
 
 async function startServer() {
   const app = express();
+app.use('/api', localApiOnly(() => PORT));
   app.use(express.json({ limit: '5mb' }));
 
   const httpServer = createServer(app);
 
   // WebSocket server for Gemini 3.8 Live API real-time voice conversations
-  const wss = new WebSocketServer({ noServer: true });
+  const wss = new WebSocketServer({ verifyClient: (info) => isLocalRequest(info.req, PORT, true), noServer: true });
 
   httpServer.on('upgrade', (request, socket, head) => {
     const pathname = new URL(request.url || '/', `http://${request.headers.host}`).pathname;
@@ -353,7 +355,7 @@ async function startServer() {
     });
   }
 
-  httpServer.listen(PORT, '0.0.0.0', () => {
+  httpServer.listen(PORT, '127.0.0.1', () => {
     console.log(`Server listening on http://0.0.0.0:${PORT}`);
   });
 }
